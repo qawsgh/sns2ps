@@ -1,0 +1,51 @@
+---
+name: build
+on:
+  create:
+    tags:
+      - v*
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [1.16.x]
+        os: [linux-amd64, macos-amd64, macos-arm64, windows-amd64]
+        include:
+        - os: linux-amd64
+          GOOS: linux
+          GOARCH: amd64
+        - os: macos-amd64
+          GOOS: darwin
+          GOARCH: amd64
+        - os: macos-arm64
+          GOOS: darwin
+          GOARCH: arm64
+        - os: windows-amd64
+          GOOS: windows
+          GOARCH: amd64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the version from tag being built
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        shell: bash
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build sns2ps for non-windows platforms
+        working-directory: ./cmd
+        run: env GOOS=${{ matrix.GOOS }} GOARCH=${{ matrix.GOARCH }} go build -ldflags="-X 'main.Version=${{ steps.get_version.outputs.VERSION }}'" -o sns2ps
+        if: matrix.os != 'windows-amd64'
+      - name: Build sns2ps for windows
+        working-directory: ./cmd
+        run: env GOOS=${{ matrix.GOOS }} GOARCH=${{ matrix.GOARCH }} go build -ldflags="-X 'main.Version=${{ steps.get_version.outputs.VERSION }}'" -o sns2ps.exe
+        if: matrix.os == 'windows-amd64'
+      - name: Upload sns2ps arifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: sns2ps_${{ steps.get_version.outputs.VERSION }}_${{ matrix.GOOS }}_${{ matrix.GOARCH }}
+          path: ./cmd/sns2ps*
