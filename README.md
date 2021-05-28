@@ -68,9 +68,11 @@ You'll now have a CSV in the same folder where you ran the command from that you
 
 #### These questions are getting tedious - do I REALLY have to answer them every time?
 
-Glad you asked - no, you do not. If you run `sns2ps -v` or `sns2ps.exe -h` you'll see some help. You can supply matchID, username and password on the commandline. If you only provide _some_ of these, you'll be prompted for the rest.
+Glad you asked - no, you do not. If you run `./sns2ps -v` or `sns2ps.exe -h` you'll see some help. You can supply matchID, username and password on the commandline. If you only provide _some_ of these, you'll be prompted for the rest.
 
-You may wish to do this to protect your Shoot 'n Score It password from being discoverable later.
+An example would be `./sns2ps -m 19991 -u myshootnscoreitmail@example.com -p mypassword`
+
+Running the above would store your password in your computer history for other people to discover, so you may instead want to do `./sns2ps -m 19991 -u myshootnscoreitmail@example.com` and let the application prompt you for your password - whatever you type there won't be stored anywhere.
 
 ## Help - I'm stuck
 
