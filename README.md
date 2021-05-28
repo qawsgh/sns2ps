@@ -46,9 +46,10 @@ Once you've got a terminal or command prompt running, you must change to the fol
 To run the tool, type `./sns2ps` on Linux and Mac machines, or `sns2ps.exe` on Windows and press enter.
 
 ### Feeding in your match details
+
 If you just followed the instructions above, you will now be prompted for a number of things including your Match ID, your Shoot 'n Score It username, and your password for Shoot 'n Score It.
 
-You can find your MatchID by visiting the main page of your match and looking at your URL. The URL in your browser will be something like `https://shootnscoreit.com/event/22/19991/` 
+You can find your MatchID by visiting the main page of your match and looking at your URL. The URL in your browser will be something like `https://shootnscoreit.com/event/22/19991/`
 
 The number after _/event/22/_ is your matchID - in the example above, it would be *19991*
 
