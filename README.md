@@ -55,11 +55,11 @@ The number after _/event/22/_ is your matchID - in the example above, it would b
 
 If you enter all of your details correctly, you'll see something like
 
-> Generating competitor list for "My Awesome Match"
-> Found X squads
-> Found Y competitors
+> Generating competitor list for "My Awesome Match"  
+> Found X squads  
+> Found Y competitors  
 >
-> Creating CSV named "My_Awesome_Match.csv"
+> Creating CSV named "My_Awesome_Match.csv"  
 > Finished creating competitor csv - you can now import this to Practiscore
 
 You'll now have a CSV in the same folder where you ran the command from that you can import into Practiscore. The file will be the name of your match with `_` in place of spaces.
