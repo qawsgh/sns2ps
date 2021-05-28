@@ -32,8 +32,9 @@ There should be a single file in the zip named `sns2ps` for Apple or Linux compu
 ### Linux and Mac only - make the tool runnable
 
 * Open a terminal application
-** For Mac users, you'll want something like [iTerm](https://iterm2.com/) or the `Terminal` under _Applications -> Utilities -> Terminal.app_
+  * For Mac users, you'll want something like [iTerm](https://iterm2.com/) or the `Terminal` under _Applications -> Utilities -> Terminal.app_
 * Change to the directory where you extracted the `sns2ps` file from the `zip` file you downloaded
+  * If you dragged the `sns` file to your desktop, type `cd ~/Desktop` to get to the right place
 * Execute the following command to make the file runnable as your user: `chmod 700 sns2ps`
 
 ### Running the tool
@@ -73,4 +74,3 @@ You may wish to do this to protect your Shoot 'n Score It password from being di
 ## Help - I'm stuck
 
 I'm sorry to hear that - I really want this to be as simple to use as possible. If you're stuck, please [raise an issue](https://github.com/qawsgh/sns2ps/issues) here with as much detail as possible.
- 
