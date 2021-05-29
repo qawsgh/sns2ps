@@ -15,27 +15,15 @@ import (
 	"github.com/qawsgh/sns2ps/pkg/match"
 )
 
-// WriteCSV opens a csv file, writes the headings that Practiscore uses to identify
+// CSVContent creates the headings that Practiscore uses to identify
 // content in the row, and then for each competitor, creates a row representing
 // their registration details.
-// The match name from Shoot 'n Score It is used as the CSV filename.
-func WriteCSV(competitors []competitors.Competitor, match match.Match) {
+func CSVContent(competitors []competitors.Competitor) [][]string {
 	var data [][]string
-	filename := strings.ReplaceAll(match.MatchName+".csv", " ", "_")
-	fmt.Printf("\nCreating CSV named \"%v\"\n", filename)
-
 	var headings = []string{"number", "first name", "last name", "email", "phone",
 		"squad", "age", "category", "gender", "division", "power factor", "class",
 		"special", "team", "region"}
 	data = append(data, headings)
-
-	file, err := os.Create(filename)
-	if err != nil {
-		log.Fatal("Cannot open file", err)
-	}
-	defer file.Close()
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
 
 	// BUG(qawsgh): Category2 is required due to Practiscore iOS not handling
 	// 'super junior' correctly in the Category field.
@@ -47,6 +35,24 @@ func WriteCSV(competitors []competitors.Competitor, match match.Match) {
 			competitors[c].Region}
 		data = append(data, csvContent)
 	}
+
+	return data
+}
+
+// WriteCSV opens a csv file and writes the content provided from CSVContent.
+// The match name from Shoot 'n Score It is used as the CSV filename.
+func WriteCSV(data [][]string, match match.Match) {
+
+	filename := strings.ReplaceAll(match.MatchName+".csv", " ", "_")
+	fmt.Printf("\nCreating CSV named \"%v\"\n", filename)
+
+	file, err := os.Create(filename)
+	if err != nil {
+		log.Fatal("Cannot open file", err)
+	}
+	defer file.Close()
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
 
 	for _, value := range data {
 		err := writer.Write(value)

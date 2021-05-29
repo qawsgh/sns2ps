@@ -101,5 +101,6 @@ func main() {
 	fmt.Printf("Found %d competitors\n", len(competitors))
 
 	// Write competitor information to Practiscore CSV file
-	practiscorecsv.WriteCSV(competitors, match)
+	csvContent := practiscorecsv.CSVContent(competitors)
+	practiscorecsv.WriteCSV(csvContent, match)
 }
