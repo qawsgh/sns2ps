@@ -14,45 +14,57 @@ import (
 // used. This should be used for testing and development only.
 func Competitors(
 	url string, categories map[string]string, divisions map[string]string, match match.Match, regions map[string]string,
-	squads []squads.Squad, username string, password string, useLocal bool) []competitors.Competitor {
+	squads []squads.Squad, username string, password string, useLocal bool) (*[]competitors.Competitor, error) {
 
 	var body []byte
+	var err error
 	if useLocal {
-		body = requests.FileRequest("sample_content/sg_competitors.json")
+		body = requests.FileRequest("../sample_content/sg_competitors.json")
 	} else {
-		body = requests.WebRequest(url, username, password)
+		body, err = requests.WebRequest(url, username, password)
+		if err != nil {
+			return nil, err
+		}
 	}
 	competitors := competitors.GetCompetitors(body, categories, divisions, match, regions, squads)
-	return competitors
+	return &competitors, nil
 }
 
 // Match returns an internal representation of a match using the Match package.
 // If useLocal is True, instead of requesting details from the web API, local files will be
 // used. This should be used for testing and development only.
-func Match(url string, username string, password string, useLocal bool) match.Match {
+func Match(url string, username string, password string, useLocal bool) (*match.Match, error) {
 	var body []byte
+	var err error
 	if useLocal {
-		body = requests.FileRequest("sample_content/sg_match.json")
+		body = requests.FileRequest("../sample_content/sg_match.json")
 	} else {
-		body = requests.WebRequest(url, username, password)
+		body, err = requests.WebRequest(url, username, password)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	m := match.GetMatch(body)
-	return m
+	return &m, nil
 }
 
 // getSquads returns an internal representation of the squads for a match using the
 // Squads package.
 // If useLocal is True, instead of requesting details from the web API, local files will be
 // used. This should be used for testing and development only.
-func Squads(url string, username string, password string, useLocal bool) []squads.Squad {
+func Squads(url string, username string, password string, useLocal bool) (*[]squads.Squad, error) {
 	var body []byte
+	var err error
 	if useLocal {
-		body = requests.FileRequest("sample_content/squads.json")
+		body = requests.FileRequest("../sample_content/squads.json")
 	} else {
-		body = requests.WebRequest(url, username, password)
+		body, err = requests.WebRequest(url, username, password)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	squads := squads.GetSquads(body)
-	return squads
+	return &squads, nil
 }
