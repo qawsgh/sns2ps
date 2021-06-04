@@ -14,7 +14,7 @@ import (
 // used. This should be used for testing and development only.
 func Competitors(
 	url string, categories map[string]string, divisions map[string]string, match match.Match, regions map[string]string,
-	squads []squads.Squad, username string, password string, useLocal bool) (*[]competitors.Competitor, error) {
+	squads []squads.Squad, username string, password string, useLocal bool) (*[]competitors.Competitor, *requests.HTTPError) {
 
 	var body []byte
 	var err error
@@ -23,7 +23,8 @@ func Competitors(
 	} else {
 		body, err = requests.WebRequest(url, username, password)
 		if err != nil {
-			return nil, err
+			re := err.(*requests.HTTPError)
+			return nil, re
 		}
 	}
 	competitors := competitors.GetCompetitors(body, categories, divisions, match, regions, squads)
@@ -33,7 +34,7 @@ func Competitors(
 // Match returns an internal representation of a match using the Match package.
 // If useLocal is True, instead of requesting details from the web API, local files will be
 // used. This should be used for testing and development only.
-func Match(url string, username string, password string, useLocal bool) (*match.Match, error) {
+func Match(url string, username string, password string, useLocal bool) (*match.Match, *requests.HTTPError) {
 	var body []byte
 	var err error
 	if useLocal {
@@ -41,7 +42,8 @@ func Match(url string, username string, password string, useLocal bool) (*match.
 	} else {
 		body, err = requests.WebRequest(url, username, password)
 		if err != nil {
-			return nil, err
+			re := err.(*requests.HTTPError)
+			return nil, re
 		}
 	}
 
@@ -53,7 +55,7 @@ func Match(url string, username string, password string, useLocal bool) (*match.
 // Squads package.
 // If useLocal is True, instead of requesting details from the web API, local files will be
 // used. This should be used for testing and development only.
-func Squads(url string, username string, password string, useLocal bool) (*[]squads.Squad, error) {
+func Squads(url string, username string, password string, useLocal bool) (*[]squads.Squad, *requests.HTTPError) {
 	var body []byte
 	var err error
 	if useLocal {
@@ -61,7 +63,8 @@ func Squads(url string, username string, password string, useLocal bool) (*[]squ
 	} else {
 		body, err = requests.WebRequest(url, username, password)
 		if err != nil {
-			return nil, err
+			re := err.(*requests.HTTPError)
+			return nil, re
 		}
 	}
 

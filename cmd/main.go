@@ -19,7 +19,6 @@ import (
 	"github.com/qawsgh/sns2ps/pkg/entities"
 	"github.com/qawsgh/sns2ps/pkg/practiscorecsv"
 	"github.com/qawsgh/sns2ps/pkg/regions"
-	"github.com/qawsgh/sns2ps/pkg/requests"
 	"golang.org/x/term"
 )
 
@@ -100,8 +99,7 @@ func main() {
 
 	squads, err := entities.Squads(squadsURL, username, password, useLocal)
 	if err != nil {
-		re := err.(*requests.HTTPError)
-		if re.StatusCode == 404 {
+		if err.StatusCode == 404 {
 			fmt.Println("Could not get squad info for this match - please check that squads are defined in Shoot 'n Score It")
 		} else {
 			fmt.Println("Unknown error trying to get squad info")
@@ -112,8 +110,7 @@ func main() {
 
 	competitors, err := entities.Competitors(competitorsURL, categories, divisions, *match, regions, *squads, username, password, useLocal)
 	if err != nil {
-		re := err.(*requests.HTTPError)
-		if re.StatusCode == 404 {
+		if err.StatusCode == 404 {
 			fmt.Println("Could not get competitor info for this match")
 		} else {
 			fmt.Println("Unknown error trying to get competitor info")
