@@ -6,5 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Lint all go files
         uses: Jerome1337/golint-action@v1.0.2
