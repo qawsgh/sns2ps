@@ -1,7 +1,6 @@
 #!/usr/bin/env python3 
 
 import json
-# from jinja2 import Environment, PackageLoader, select_autoescape
 import jinja2
 import random
 import sys
@@ -57,7 +56,7 @@ def generate_ai_competitors_json():
             sex = 'm'
             if cat == 'L':
                 sex = 'f'
-            vars = {
+            template_vars = {
                 "division": AI_DIVISIONS[div],
                 "sex": sex,
                 "ai_division": div,
@@ -69,7 +68,7 @@ def generate_ai_competitors_json():
                 "number": number
             }
             number += 1
-            competitor = json.loads(template.render(vars))
+            competitor = json.loads(template.render(template_vars))
             competitors.append(competitor)
 
     with open('../jsoncontent/ai_competitors.json', 'w') as f:
@@ -81,17 +80,17 @@ def generate_mr_competitors_json():
     number = 1
     competitors = []
 
-    templateLoader = jinja2.FileSystemLoader(searchpath="./")
-    templateEnv = jinja2.Environment(loader=templateLoader)
+    template_loader = jinja2.FileSystemLoader(searchpath="./")
+    template_env = jinja2.Environment(loader=template_loader)
     TEMPLATE_FILE = "competitor_json.j2"
-    template = templateEnv.get_template(TEMPLATE_FILE)
+    template = template_env.get_template(TEMPLATE_FILE)
 
     for div in MR_DIVISIONS.keys():
         for cat in CATEGORIES.keys():
             sex = 'm'
             if cat == 'L':
                 sex = 'f'
-            vars = {
+            template_vars = {
                 "division": MR_DIVISIONS[div],
                 "sex": sex,
                 "mr_division": div,
@@ -103,7 +102,7 @@ def generate_mr_competitors_json():
                 "number": number
             }
             number += 1
-            competitor = json.loads(template.render(vars))
+            competitor = json.loads(template.render(template_vars))
             competitors.append(competitor)
 
     with open('../jsoncontent/mr_competitors.json', 'w') as f:
@@ -115,17 +114,17 @@ def generate_sg_competitors_json():
     number = 1
     competitors = []
 
-    templateLoader = jinja2.FileSystemLoader(searchpath="./")
-    templateEnv = jinja2.Environment(loader=templateLoader)
+    template_loader = jinja2.FileSystemLoader(searchpath="./")
+    template_env = jinja2.Environment(loader=template_loader)
     TEMPLATE_FILE = "competitor_json.j2"
-    template = templateEnv.get_template(TEMPLATE_FILE)
+    template = template_env.get_template(TEMPLATE_FILE)
 
     for div in SG_DIVISIONS.keys():
         for cat in CATEGORIES.keys():
             sex = 'm'
             if cat == 'L':
                 sex = 'f'
-            vars = {
+            template_vars = {
                 "division": SG_DIVISIONS[div],
                 "sex": sex,
                 "sg_division": div,
@@ -137,7 +136,7 @@ def generate_sg_competitors_json():
                 "number": number
             }
             number += 1
-            competitor = json.loads(template.render(vars))
+            competitor = json.loads(template.render(template_vars))
             competitors.append(competitor)
 
     with open('../jsoncontent/sg_competitors.json', 'w') as f:
