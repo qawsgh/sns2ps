@@ -45,7 +45,8 @@ func GetMatch(byteValue []byte) Match {
 	allMatches := MatchEntries{}
 	err := json.Unmarshal(byteValue, &allMatches)
 	if err != nil {
-		log.Printf("Failed to unmarshal squads")
+		log.Printf("Failed to unmarshal match")
+		log.Println(err)
 	}
 	matches := GetMatchFromJSON(allMatches)
 	// Because we are using top-level json array, we get a list of matches, even
