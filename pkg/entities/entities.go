@@ -1,4 +1,4 @@
-// Return entities for various components including competitors, match, and squads
+// Package entities incluides various components including competitors, match, and squads
 package entities
 
 import (
@@ -40,17 +40,16 @@ func Match(url string, username string, password string, useLocal bool) (*match.
 		body := requests.FileRequest("../sample_content/sg_match.json")
 		m := match.GetMatch(body)
 		return &m, nil
-	} else {
-		body, err := requests.WebRequest(url, username, password)
-		if err != nil {
-			return nil, err
-		}
-		m := match.GetMatch(body)
-		return &m, nil
 	}
+	body, err := requests.WebRequest(url, username, password)
+	if err != nil {
+		return nil, err
+	}
+	m := match.GetMatch(body)
+	return &m, nil
 }
 
-// getSquads returns an internal representation of the squads for a match using the
+// Squads returns an internal representation of the squads for a match using the
 // Squads package.
 // If useLocal is True, instead of requesting details from the web API, local files will be
 // used. This should be used for testing and development only.

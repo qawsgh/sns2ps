@@ -7,6 +7,7 @@ package squads
 
 import (
 	"encoding/json"
+	"log"
 )
 
 // Unmarshal the json content provided for use by other functions
@@ -41,7 +42,10 @@ type Squad struct {
 // Squad items that is then returned
 func GetSquads(byteValue []byte) []Squad {
 	allSquads := SquadEntries{}
-	json.Unmarshal(byteValue, &allSquads)
+	err := json.Unmarshal(byteValue, &allSquads)
+	if err != nil {
+		log.Printf("Failed to unmarshal squads")
+	}
 	squads := GetSquadsFromJSON(allSquads)
 	return squads
 }
