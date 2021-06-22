@@ -23,6 +23,7 @@ import (
 	"golang.org/x/term"
 )
 
+// Version is set here so that it can be defined at build time
 var Version = "development"
 
 // The arguments function ensures that all required arguments are set as flags to the
