@@ -34,7 +34,7 @@ type Squad struct {
 	MaxCompetitors uint64 `json:"max_competitors"`
 	Comment        string `json:"comment"`
 	Registration   string `json:"registration"`
-	Prematch       string `json:"prematch"`
+	Prematch       bool   `json:"prematch"`
 	Event          uint64 `json:"event"`
 }
 
@@ -45,6 +45,7 @@ func GetSquads(byteValue []byte) []Squad {
 	err := json.Unmarshal(byteValue, &allSquads)
 	if err != nil {
 		log.Printf("Failed to unmarshal squads")
+		log.Println(err)
 	}
 	squads := GetSquadsFromJSON(allSquads)
 	return squads

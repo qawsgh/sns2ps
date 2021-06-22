@@ -36,7 +36,7 @@ type Competitor struct {
 	Squad          string
 	Division       string
 	Number         int    `json:"number"`
-	Shooter        string `json:"shooter"`
+	Shooter        int    `json:"shooter"`
 	FirstName      string `json:"first_name"`
 	LastName       string `json:"last_name"`
 	Sex            string `json:"sex"`
@@ -119,7 +119,8 @@ func GetCompetitors(byteValue []byte, categories map[string]string, divisions ma
 	allCompetitors := CompetitorEntries{}
 	err := json.Unmarshal(byteValue, &allCompetitors)
 	if err != nil {
-		log.Printf("Failed to unmarshal squads")
+		log.Printf("Failed to unmarshal competitors")
+		log.Println(err)
 	}
 	competitors := GetCompetitorsFromJSON(allCompetitors, categories, divisions, match, regions, squads)
 	return competitors
