@@ -1,4 +1,4 @@
-// Return entities for various components including competitors, match, and squads
+// Package entities incluides various components including competitors, match, and squads
 package entities
 
 import (
@@ -14,45 +14,58 @@ import (
 // used. This should be used for testing and development only.
 func Competitors(
 	url string, categories map[string]string, divisions map[string]string, match match.Match, regions map[string]string,
-	squads []squads.Squad, username string, password string, useLocal bool) []competitors.Competitor {
+	squads []squads.Squad, username string, password string, useLocal bool) (*[]competitors.Competitor, error) {
 
 	var body []byte
+	var err error
 	if useLocal {
-		body = requests.FileRequest("sample_content/sg_competitors.json")
+		body = requests.FileRequest("../sample_content/sg_competitors.json")
 	} else {
-		body = requests.WebRequest(url, username, password)
+		body, err = requests.WebRequest(url, username, password)
+		if err != nil {
+			re := err.(*requests.HTTPError)
+			return nil, re
+		}
 	}
 	competitors := competitors.GetCompetitors(body, categories, divisions, match, regions, squads)
-	return competitors
+	return &competitors, nil
 }
 
 // Match returns an internal representation of a match using the Match package.
 // If useLocal is True, instead of requesting details from the web API, local files will be
 // used. This should be used for testing and development only.
-func Match(url string, username string, password string, useLocal bool) match.Match {
-	var body []byte
-	if useLocal {
-		body = requests.FileRequest("sample_content/sg_match.json")
-	} else {
-		body = requests.WebRequest(url, username, password)
-	}
+func Match(url string, username string, password string, useLocal bool) (*match.Match, error) {
 
+	if useLocal {
+		body := requests.FileRequest("../sample_content/sg_match.json")
+		m := match.GetMatch(body)
+		return &m, nil
+	}
+	body, err := requests.WebRequest(url, username, password)
+	if err != nil {
+		return nil, err
+	}
 	m := match.GetMatch(body)
-	return m
+	return &m, nil
 }
 
-// getSquads returns an internal representation of the squads for a match using the
+// Squads returns an internal representation of the squads for a match using the
 // Squads package.
 // If useLocal is True, instead of requesting details from the web API, local files will be
 // used. This should be used for testing and development only.
-func Squads(url string, username string, password string, useLocal bool) []squads.Squad {
+func Squads(url string, username string, password string, useLocal bool) (*[]squads.Squad, error) {
 	var body []byte
+	var err error
 	if useLocal {
-		body = requests.FileRequest("sample_content/squads.json")
+		body = requests.FileRequest("../sample_content/squads.json")
 	} else {
-		body = requests.WebRequest(url, username, password)
+		body, err = requests.WebRequest(url, username, password)
+		if err != nil {
+			re := err.(*requests.HTTPError)
+			return nil, re
+		}
 	}
 
 	squads := squads.GetSquads(body)
-	return squads
+	return &squads, nil
 }

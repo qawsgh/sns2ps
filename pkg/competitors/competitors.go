@@ -1,16 +1,17 @@
-// competitors represent the details of a competitor in Shoot 'n Score It that
+// Package competitors represents the details of a competitor in Shoot 'n Score It that
 // are required for creation of a competitor import file for Practiscore
 package competitors
 
 import (
 	"encoding/json"
+	"log"
 	"strconv"
 
 	"github.com/qawsgh/sns2ps/pkg/match"
 	"github.com/qawsgh/sns2ps/pkg/squads"
 )
 
-// Unmarshal the json content provided for use by other functions
+// UnmarshalJSON unmarshals the json content provided for use by other functions
 func (f *CompetitorEntries) UnmarshalJSON(bs []byte) error {
 	return json.Unmarshal(bs, &f.CompetitorEntries)
 }
@@ -116,7 +117,10 @@ func getCompetitorDivision(competitor Competitor, divisions map[string]string,
 func GetCompetitors(byteValue []byte, categories map[string]string, divisions map[string]string,
 	match match.Match, regions map[string]string, squads []squads.Squad) []Competitor {
 	allCompetitors := CompetitorEntries{}
-	json.Unmarshal(byteValue, &allCompetitors)
+	err := json.Unmarshal(byteValue, &allCompetitors)
+	if err != nil {
+		log.Printf("Failed to unmarshal squads")
+	}
 	competitors := GetCompetitorsFromJSON(allCompetitors, categories, divisions, match, regions, squads)
 	return competitors
 }

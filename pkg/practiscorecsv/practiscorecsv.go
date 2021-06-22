@@ -1,4 +1,4 @@
-// The practiscorecsv package uses Competitor and Match information to create a
+// Package practiscorecsv uses Competitor and Match information to create a
 // csv file in an appropriate format for importing competitor registration into
 // Practiscore.
 package practiscorecsv
@@ -28,8 +28,8 @@ func CSVContent(competitors []competitors.Competitor) [][]string {
 	// BUG(qawsgh): Category2 is required due to Practiscore iOS not handling
 	// 'super junior' correctly in the Category field.
 	for c := range competitors {
-		comp_number := strconv.Itoa(competitors[c].Number)
-		var csvContent = []string{comp_number, competitors[c].FirstName, competitors[c].LastName,
+		compNumber := strconv.Itoa(competitors[c].Number)
+		var csvContent = []string{compNumber, competitors[c].FirstName, competitors[c].LastName,
 			competitors[c].Email, "", competitors[c].Squad, competitors[c].Category, competitors[c].Category2,
 			competitors[c].Sex, competitors[c].Division, "", competitors[c].Classification, "", "",
 			competitors[c].Region}

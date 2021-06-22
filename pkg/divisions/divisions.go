@@ -1,9 +1,10 @@
-// The divisions package returns a simple map of division codes against their
+// Package divisions returns a simple map of division codes against their
 // full division names.
 // Division codes are used in Shoot 'n Score It competitor entries,
 // while the full division name is required for Practiscore import
 package divisions
 
+// Divisions returns the list of divisions to be used to translate codes to names
 func Divisions() map[string]string {
 	m := map[string]string{
 		"hg1":  "Open",

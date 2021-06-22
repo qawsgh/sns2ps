@@ -24,3 +24,4 @@ sns2ps
 todo.md
 *.csv
 pyvenv/*
+cmd/cmd

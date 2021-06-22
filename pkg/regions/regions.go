@@ -1,7 +1,8 @@
-// The regions package returns a simple map of 3 letter region codes against their
+// Package regions returns a simple map of 3 letter region codes against their
 // full region names.
 package regions
 
+// Regions returns the mapping of region names to codes
 func Regions() map[string]string {
 	m := map[string]string{
 		"ALA": "Aland Islands",
