@@ -38,6 +38,8 @@ MR_DIVISIONS = {
 
 REGIONS = ["BEL", "DEU", "FRA", "GBR"]
 
+STATUSES = ["a", "x"]
+
 SQUADS = ["27462", "27463", "27464", "27465", "27466", "27467", "27468", "27470", "28842",
           "32408", "29748"]
 
@@ -65,7 +67,8 @@ def generate_ai_competitors_json():
                 "region": random.choice(REGIONS),
                 "squad": random.choice(SQUADS),
                 "event": "7486",
-                "number": number
+                "number": number,
+                "status": random.choice(STATUSES)
             }
             number += 1
             competitor = json.loads(template.render(template_vars))
@@ -99,7 +102,8 @@ def generate_mr_competitors_json():
                 "region": random.choice(REGIONS),
                 "squad": random.choice(SQUADS),
                 "event": "7486",
-                "number": number
+                "number": number,
+                "status": random.choice(STATUSES)
             }
             number += 1
             competitor = json.loads(template.render(template_vars))
@@ -133,7 +137,8 @@ def generate_sg_competitors_json():
                 "region": random.choice(REGIONS),
                 "squad": random.choice(SQUADS),
                 "event": "7486",
-                "number": number
+                "number": number,
+                "status": random.choice(STATUSES)
             }
             number += 1
             competitor = json.loads(template.render(template_vars))
