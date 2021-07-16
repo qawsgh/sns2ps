@@ -59,6 +59,8 @@ type Competitor struct {
 	Category       string `json:"category"`
 	Category2      string
 	Classification string `json:"classification"`
+	Status         string `json:"status"`
+	PowerFactor    string
 }
 
 // Get the competitor category by looking up the value set for the competitor key
@@ -83,6 +85,10 @@ func getCompetitorCategory(competitor Competitor, categories map[string]string) 
 		competitor.Category = "super senior"
 	}
 
+	if competitor.Category == "junior" && competitor.Sex == "f" {
+		competitor.Sex = "m"
+	}
+
 	return competitor
 }
 
@@ -96,18 +102,22 @@ func getCompetitorDivision(competitor Competitor, divisions map[string]string,
 		divCode = competitor.AirDiv
 		competitor.AirDiv = divisions[divCode]
 		competitor.Division = divisions[divCode]
+		competitor.PowerFactor = "Minor"
 	case "hg":
 		divCode = competitor.HandgunDiv
 		competitor.HandgunDiv = divisions[divCode]
 		competitor.Division = divisions[divCode]
+		competitor.PowerFactor = competitor.HandgunPf
 	case "mr":
 		divCode = competitor.MiniRifleDiv
 		competitor.MiniRifleDiv = divisions[divCode]
 		competitor.Division = divisions[divCode]
+		competitor.PowerFactor = "Minor"
 	case "sg":
 		divCode = competitor.ShotgunDiv
 		competitor.ShotgunDiv = divisions[divCode]
 		competitor.Division = divisions[divCode]
+		competitor.PowerFactor = "MAJOR"
 	}
 	return competitor
 }
@@ -134,6 +144,10 @@ func GetCompetitorsFromJSON(competitorSON CompetitorEntries, categories map[stri
 	var competitors []Competitor
 	for i := 0; i < len(competitorSON.CompetitorEntries); i++ {
 		competitor := competitorSON.CompetitorEntries[i].Competitor
+		if competitor.Status == "x" {
+			// Skip deleted competitor
+			continue
+		}
 		competitor.Pk = competitorSON.CompetitorEntries[i].Pk
 		for squad := range squads {
 			if squads[squad].Pk == competitor.SquadPk {

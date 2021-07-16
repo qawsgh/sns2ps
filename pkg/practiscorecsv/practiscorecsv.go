@@ -31,7 +31,7 @@ func CSVContent(competitors []competitors.Competitor) [][]string {
 		compNumber := strconv.Itoa(competitors[c].Number)
 		var csvContent = []string{compNumber, competitors[c].FirstName, competitors[c].LastName,
 			competitors[c].Email, "", competitors[c].Squad, competitors[c].Category, competitors[c].Category2,
-			competitors[c].Sex, competitors[c].Division, "", competitors[c].Classification, "", "",
+			competitors[c].Sex, competitors[c].Division, competitors[c].PowerFactor, competitors[c].Classification, "", "",
 			competitors[c].Region}
 		data = append(data, csvContent)
 	}
